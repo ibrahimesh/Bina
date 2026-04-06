@@ -7,5 +7,6 @@ namespace Bina.DAL.Repositories.Interfaces
     public interface IPropertyRepository : IRepository<Property> 
     {
         IQueryable<Property> GetBaseQuery();
+        Task<Property> GetByIdWithDetailsAsync(int id);
     }
 }

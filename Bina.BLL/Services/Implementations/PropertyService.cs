@@ -105,9 +105,9 @@ namespace Bina.BLL.Services.Implementations
         {
             try
             {
-                var entity = await _propertyRepository.GetByIdAsync(id);
-                if (entity == null) return ApiResponse<PropertyResponseDto>.Fail("Tap?lmad?");
-                
+                var entity = await _propertyRepository.GetByIdWithDetailsAsync(id);
+                if (entity == null) return ApiResponse<PropertyResponseDto>.Fail("Tapilmad?");
+
                 entity.ViewCount++;
                 _propertyRepository.Update(entity);
                 await _propertyRepository.SaveChangesAsync();

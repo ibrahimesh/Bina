@@ -21,7 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1. DbContext with connection string from appsettings
 builder.Services.AddDbContext<BinaDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("Bina.DAL")));
 
 // 2. JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -45,6 +46,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddControllers(options => 
 {
     options.Filters.Add<ValidationFilter>();
+})
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All);
 });
 
 // 3. All repositories (Scoped)

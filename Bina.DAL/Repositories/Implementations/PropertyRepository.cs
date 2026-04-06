@@ -23,5 +23,16 @@ namespace Bina.DAL.Repositories.Implementations
                 .AsSplitQuery()
                 .AsNoTracking();
         }
+
+        public async System.Threading.Tasks.Task<Property> GetByIdWithDetailsAsync(int id)
+        {
+            return await _context.Properties
+                .Include(p => p.Images)
+                .Include(p => p.City)
+                .Include(p => p.District)
+                .Include(p => p.Metro)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }

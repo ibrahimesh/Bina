@@ -4,6 +4,7 @@ using Bina.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bina.DAL.Migrations
 {
     [DbContext(typeof(BinaDbContext))]
-    partial class BinaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260406213834_InitialDbCreation")]
+    partial class InitialDbCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,7 +442,7 @@ namespace Bina.DAL.Migrations
                             CategoryId = 1,
                             CityId = 1,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Çox gözəl və işıqlı mənzildir. Əşyalarla birlikdə satılır.",
+                            Description = "Cox gцz?l v? i??ql? m?nzildir. ??yalarla birlikd? sat?l?r.",
                             DistrictId = 4,
                             Floor = 5,
                             HasMortgage = false,
@@ -451,7 +454,7 @@ namespace Bina.DAL.Migrations
                             Price = 185000m,
                             RoomCount = 3,
                             Status = 1,
-                            Title = "Gənclik m/s yaxınlığında 3 otaqlı təmirli mənzil",
+                            Title = "G?nclik m/s yax?nl???nda 3 otaql? t?mirli m?nzil",
                             TotalFloors = 16,
                             UserId = 1,
                             ViewCount = 15
@@ -463,7 +466,7 @@ namespace Bina.DAL.Migrations
                             CategoryId = 5,
                             CityId = 1,
                             CreatedAt = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Yol kənarında gür gediş-gəlişli yerdə yerləşir.",
+                            Description = "Yol k?nar?nda gьr gedi?-g?li?li yerd? yerl??ir.",
                             DistrictId = 7,
                             Floor = 1,
                             HasMortgage = false,
@@ -474,7 +477,7 @@ namespace Bina.DAL.Migrations
                             Price = 2500m,
                             RoomCount = 2,
                             Status = 1,
-                            Title = "Nizami rayonunda obyekt icarəyə verilir",
+                            Title = "Nizami rayonunda obyekt icarey? verilir",
                             TotalFloors = 5,
                             UserId = 1,
                             ViewCount = 42

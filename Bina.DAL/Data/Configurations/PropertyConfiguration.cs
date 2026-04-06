@@ -22,8 +22,8 @@ namespace Bina.DAL.Data.Configurations
                 new Property 
                 {
                     Id = 1,
-                    Title = "G?nclik m/s yax?nl???nda 3 otaql? t?mirli m?nzil",
-                    Description = "Cox göz?l v? i??ql? m?nzildir. ??yalarla birlikd? sat?l?r.",
+                    Title = "G\u0259nclik m/s yax\u0131nl\u0131\u011F\u0131nda 3 otaql\u0131 t\u0259mirli m\u0259nzil",
+                    Description = "\u00C7ox g\u00F6z\u0259l v\u0259 i\u015F\u0131ql\u0131 m\u0259nzildir. \u018F\u015Fyalarla birlikd\u0259 sat\u0131l\u0131r.",
                     Price = 185000,
                     IsNegotiable = true,
                     Area = 95,
@@ -38,16 +38,16 @@ namespace Bina.DAL.Data.Configurations
                     CreatedAt = new System.DateTime(2024, 1, 1, 0, 0, 0, System.DateTimeKind.Utc),
                     ViewCount = 15,
                     UserId = 1,
-                    CategoryId = 1, // M?nzil
-                    CityId = 1, // Bak?
-                    DistrictId = 4, // N?rimanov
-                    MetroId = 4 // G?nclik
+                    CategoryId = 1, // M\u0259nzil
+                    CityId = 1, // Bak\u0131
+                    DistrictId = 4, // N\u0259rimanov
+                    MetroId = 4 // G\u0259nclik
                 },
                 new Property 
                 {
                     Id = 2,
-                    Title = "Nizami rayonunda obyekt icarey? verilir",
-                    Description = "Yol k?nar?nda gür gedi?-g?li?li yerd? yerl??ir.",
+                    Title = "Nizami rayonunda obyekt icar\u0259y\u0259 verilir",
+                    Description = "Yol k\u0259nar\u0131nda g\u00FCr gedi\u015F-g\u0259li\u015Fli yerd\u0259 yerl\u0259\u015Fir.",
                     Price = 2500,
                     IsNegotiable = false,
                     Area = 120,
@@ -63,7 +63,7 @@ namespace Bina.DAL.Data.Configurations
                     ViewCount = 42,
                     UserId = 1,
                     CategoryId = 5, // Obyekt
-                    CityId = 1, // Bak?
+                    CityId = 1, // Bak\u0131
                     DistrictId = 7, // Nizami
                     MetroId = null
                 }
