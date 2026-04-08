@@ -1,0 +1,30 @@
+﻿@model IList<PropertyListDto>
+@{
+    ViewData["Title"] = "Ana Səhifə";
+}
+
+<div class="row">
+    @if(Model != null && Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Elan sekli">
+                    <div class="card-body p-2">
+                        <h5 class="card-title text-danger fw-bold mb-1">@item.Price AZN</h5>
+                        <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
+                        <p class="card-text mb-1 small">@(item.RoomCount) otaqlı - @(item.Area) m²</p>
+                        <p class="card-text text-muted small">@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12 text-center mt-5">
+            <h4 class="text-muted">Heç bir elan tapılmadı. Yeni elanlar gözlənilir.</h4>
+        </div>
+    }
+</div>

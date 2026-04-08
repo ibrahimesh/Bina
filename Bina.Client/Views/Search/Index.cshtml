@@ -1,0 +1,41 @@
+@model IList<PropertyListDto>
+@{
+    ViewData["Title"] = "Axtar??";
+    var query = ViewData["Query"]?.ToString();
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8">
+            <form method="get" asp-controller="Search" asp-action="Index">
+                <div class="input-group input-group-lg shadow-sm">
+                    <input type="text" class="form-control border-0" name="query" placeholder="??h?r, ?nvan v? ya a?ar s?z..." value="@query">
+                    <button class="btn btn-danger fw-bold" type="submit">Axtar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(query))
+    {
+        <h5 class="text-muted mb-4">Axtar?? n?tic?si: "@query" (@(Model?.Count ?? 0) elan)</h5>
+        <div class="row">
+            @if(Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Elan sekli">
+                            <div class="card-body p-2">
+                                <h5 class="card-title text-danger fw-bold mb-1">@item.Price AZN</h5>
+                                <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
+                                <p class="card-text mb-1 small">@(item.RoomCount) otaql? - @(item.Area) m?</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>

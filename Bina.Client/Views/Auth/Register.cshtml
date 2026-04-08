@@ -1,0 +1,48 @@
+@model RegisterDto
+@{
+    ViewData["Title"] = "Qeydiyyat";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow border-0">
+            <div class="card-header bg-danger text-white text-center">
+                <h4 class="mb-0">Qeydiyyat</h4>
+            </div>
+            <div class="card-body">
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger">
+                        <div asp-validation-summary="All"></div>
+                    </div>
+                }
+                <form asp-controller="Auth" asp-action="Register" method="post">
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Ad v? Soyad</label>
+                        <input type="text" class="form-control" name="FullName" asp-for="FullName" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">E-po?t</label>
+                        <input type="email" class="form-control" name="Email" asp-for="Email" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">Mobil n?mr?</label>
+                        <input type="text" class="form-control" name="PhoneNumber" asp-for="PhoneNumber" placeholder="+994" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">?ifr?</label>
+                        <input type="password" class="form-control" name="Password" asp-for="Password" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">?ifr?nin t?krar?</label>
+                        <input type="password" class="form-control" name="ConfirmPassword" asp-for="ConfirmPassword" required />
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 fw-bold py-2">Hesab Yarat</button>
+                    <div class="text-center mt-3">
+                        T?z?d?n <a asp-controller="Auth" asp-action="Login" class="text-danger fw-bold text-decoration-none">daxil ol</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
