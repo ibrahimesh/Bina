@@ -1,40 +1,79 @@
-@model IList<PropertyListDto>
+﻿@model IList<PropertyListDto>
 @{
-    ViewData["Title"] = "Axtar??";
+    ViewData["Title"] = "Axtarış";
     var query = ViewData["Query"]?.ToString();
+    var minPrice = ViewData["MinPrice"]?.ToString();
+    var maxPrice = ViewData["MaxPrice"]?.ToString();
+    var roomCount = ViewData["RoomCount"]?.ToString();
+    var listingType = ViewData["ListingType"]?.ToString();
+    var hasFilter = (bool?)ViewData["HasFilter"] ?? false;
 }
 
 <div class="container mt-4">
     <div class="row justify-content-center mb-4">
-        <div class="col-md-8">
-            <form method="get" asp-controller="Search" asp-action="Index">
-                <div class="input-group input-group-lg shadow-sm">
-                    <input type="text" class="form-control border-0" name="query" placeholder="??h?r, ?nvan v? ya a?ar s?z..." value="@query">
-                    <button class="btn btn-danger fw-bold" type="submit">Axtar</button>
+        <div class="col-md-10">
+            <form method="get" asp-controller="Search" asp-action="Index" class="card search-panel border-0">
+                <div class="card-body p-3 p-md-4">
+                    <div class="row g-2 g-md-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="query" placeholder="Şəhər, ünvan və ya açar söz..." value="@query">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" name="minPrice" min="0" placeholder="Min qiymət" value="@minPrice">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" name="maxPrice" min="0" placeholder="Max qiymət" value="@maxPrice">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" name="roomCount" min="1" max="50" placeholder="Otaq" value="@roomCount">
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" name="listingType">
+                                <option value="">Elan tipi</option>
+                                <option value="1" selected="@(listingType == "1")">Satılır</option>
+                                <option value="2" selected="@(listingType == "2")">Kirayə</option>
+                                <option value="3" selected="@(listingType == "3")">Günlük</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 text-end mt-2">
+                            <button class="btn btn-brand fw-bold px-4" type="submit">Filtrlə və Axtar</button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-    @if (!string.IsNullOrEmpty(query))
+    @if (hasFilter)
     {
-        <h5 class="text-muted mb-4">Axtar?? n?tic?si: "@query" (@(Model?.Count ?? 0) elan)</h5>
-        <div class="row">
-            @if(Model != null && Model.Any())
+        <h5 class="text-muted mb-4">Tapılan elanlar: @(Model?.Count ?? 0)</h5>
+        <div class="row g-3">
+            @if (Model != null && Model.Any())
             {
                 @foreach (var item in Model)
                 {
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100 shadow-sm border-0">
-                            <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Elan sekli">
-                            <div class="card-body p-2">
-                                <h5 class="card-title text-danger fw-bold mb-1">@item.Price AZN</h5>
-                                <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
-                                <p class="card-text mb-1 small">@(item.RoomCount) otaql? - @(item.Area) m?</p>
+                    <div class="col-md-3 mb-2">
+                        <a asp-controller="Elan" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark d-block h-100">
+                            <div class="modern-card h-100">
+                                <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top property-image" alt="Elan şəkli">
+                                <div class="card-body p-3">
+                                    <p class="card-text mb-2 fw-semibold">@item.Title</p>
+                                    <div class="mb-2">
+                                        <span class="price-tag">@item.Price AZN</span>
+                                    </div>
+                                    <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
+                                    <p class="card-text mb-0 small">@(item.RoomCount) otaqlı • @(item.Area) m²</p>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 }
+            }
+            else
+            {
+                <div class="col-12 text-center mt-3">
+                    <h5 class="text-muted">Bu filtrə uyğun elan tapılmadı.</h5>
+                </div>
             }
         </div>
     }

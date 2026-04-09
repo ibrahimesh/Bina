@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Bina.Client.Models;
 using Bina.Client.Models.DTOs;
 using System.Text.Json;
-using System.Text;
 
 namespace Bina.Client.Controllers
 {
@@ -28,21 +27,20 @@ namespace Bina.Client.Controllers
             var content = JsonContent.Create(model);
             var response = await client.PostAsync("Auth/login", content);
 
+            var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                // Store token in session (basic implementation)
-                var result = await response.Content.ReadAsStringAsync();
                 var parsed = JsonDocument.Parse(result);
-                if (parsed.RootElement.TryGetProperty("data", out JsonElement dataEle) && 
+                if (parsed.RootElement.TryGetProperty("data", out JsonElement dataEle) &&
                     dataEle.TryGetProperty("token", out JsonElement tokenEle))
                 {
-                    HttpContext.Session.SetString("JWToken", tokenEle.GetString());
+                    HttpContext.Session.SetString("JWToken", tokenEle.GetString() ?? string.Empty);
                 }
 
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "E-po?t v? ya ?ifr? yanl??d?r.");
+            AddApiErrorsToModelState(result, "E-poçt v? ya ?ifr? yanl??d?r.");
             return View(model);
         }
 
@@ -65,29 +63,65 @@ namespace Bina.Client.Controllers
             }
 
             var errTxt = await response.Content.ReadAsStringAsync();
+            AddApiErrorsToModelState(errTxt, "Qeydiyyat zaman? x?ta ba? verdi.");
+            return View(model);
+        }
+
+        private void AddApiErrorsToModelState(string responseText, string fallbackMessage)
+        {
             try
             {
-                var apiResponse = JsonSerializer.Deserialize<ApiResponse<object>>(errTxt, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                if (apiResponse != null)
+                var apiResponse = JsonSerializer.Deserialize<ApiResponse<object>>(responseText, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (apiResponse?.Errors != null && apiResponse.Errors.Count > 0)
                 {
-                    if (apiResponse.Errors != null && apiResponse.Errors.Count > 0)
+                    foreach (var err in apiResponse.Errors)
                     {
-                        foreach (var err in apiResponse.Errors)
-                        {
-                            ModelState.AddModelError("", err);
-                        }
-                        return View(model);
+                        ModelState.AddModelError(string.Empty, err);
                     }
-                    else if (!string.IsNullOrEmpty(apiResponse.Message))
-                    {
-                        ModelState.AddModelError("", apiResponse.Message);
-                        return View(model);
-                    }
+                    return;
                 }
-            } catch { }
 
-            ModelState.AddModelError("", "Qeydiyyat zaman? x?ta ba? verdi.");
-            return View(model);
+                if (!string.IsNullOrWhiteSpace(apiResponse?.Message))
+                {
+                    ModelState.AddModelError(string.Empty, apiResponse.Message);
+                    return;
+                }
+            }
+            catch
+            {
+                // ignored, fallback to parsing ValidationProblemDetails shape
+            }
+
+            try
+            {
+                using var doc = JsonDocument.Parse(responseText);
+                if (doc.RootElement.TryGetProperty("errors", out var errorsElement) && errorsElement.ValueKind == JsonValueKind.Object)
+                {
+                    var any = false;
+                    foreach (var prop in errorsElement.EnumerateObject())
+                    {
+                        if (prop.Value.ValueKind != JsonValueKind.Array) continue;
+
+                        foreach (var item in prop.Value.EnumerateArray())
+                        {
+                            var msg = item.GetString();
+                            if (!string.IsNullOrWhiteSpace(msg))
+                            {
+                                ModelState.AddModelError(string.Empty, msg);
+                                any = true;
+                            }
+                        }
+                    }
+
+                    if (any) return;
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+
+            ModelState.AddModelError(string.Empty, fallbackMessage);
         }
     }
 }

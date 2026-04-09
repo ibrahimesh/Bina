@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, ...</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, ...</value></resheader>
+  <data name="AppName" xml:space="preserve"><value>BINA.AZ</value></data>
+  <data name="Home" xml:space="preserve"><value>Ana S?hif?</value></data>
+  <data name="Search" xml:space="preserve"><value>Axtar??</value></data>
+  <data name="Login" xml:space="preserve"><value>Giri?</value></data>
+  <data name="Register" xml:space="preserve"><value>Qeydiyyat</value></data>
+  <data name="PostAd" xml:space="preserve"><value>+ Elan Yerl??dir</value></data>
+  <data name="Privacy" xml:space="preserve"><value>M?xfilik</value></data>
+  <data name="Language" xml:space="preserve"><value>Dil</value></data>
+  <data name="Azerbaijani" xml:space="preserve"><value>Az?rbaycan dili</value></data>
+  <data name="English" xml:space="preserve"><value>?ngilis dili</value></data>
+  <data name="Russian" xml:space="preserve"><value>Rus dili</value></data>
+  <data name="AdDetails" xml:space="preserve"><value>Elan Detallar?</value></data>
+  <data name="RoomCount" xml:space="preserve"><value>Otaq say?</value></data>
+  <data name="Area" xml:space="preserve"><value>Sah?</value></data>
+  <data name="Floor" xml:space="preserve"><value>M?rt?b?</value></data>
+  <data name="Category" xml:space="preserve"><value>Kateqoriya</value></data>
+  <data name="Metro" xml:space="preserve"><value>Metro</value></data>
+  <data name="AdditionalInfo" xml:space="preserve"><value>?lav? m?lumat</value></data>
+  <data name="UrgentAd" xml:space="preserve"><value>T?cili elan</value></data>
+  <data name="RegularAd" xml:space="preserve"><value>Adi elan</value></data>
+  <data name="Repaired" xml:space="preserve"><value>T?mirli</value></data>
+  <data name="NotRepaired" xml:space="preserve"><value>T?mirsiz</value></data>
+  <data name="MortgageAvailable" xml:space="preserve"><value>?potekaya yararl?</value></data>
+  <data name="NoMortgage" xml:space="preserve"><value>?poteka yoxdur</value></data>
+  <data name="PostedAt" xml:space="preserve"><value>Yerl??dirilm? tarixi</value></data>
+</root>

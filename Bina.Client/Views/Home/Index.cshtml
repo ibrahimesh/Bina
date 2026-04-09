@@ -3,21 +3,26 @@
     ViewData["Title"] = "Ana Səhifə";
 }
 
-<div class="row">
+<div class="row g-3">
     @if(Model != null && Model.Any())
     {
         @foreach (var item in Model)
         {
-            <div class="col-md-3 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Elan sekli">
-                    <div class="card-body p-2">
-                        <h5 class="card-title text-danger fw-bold mb-1">@item.Price AZN</h5>
-                        <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
-                        <p class="card-text mb-1 small">@(item.RoomCount) otaqlı - @(item.Area) m²</p>
-                        <p class="card-text text-muted small">@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+            <div class="col-md-3 mb-2">
+                <a asp-controller="Elan" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark d-block h-100">
+                    <div class="modern-card h-100">
+                        <img src="@(string.IsNullOrEmpty(item.MainImageUrl) ? "https://via.placeholder.com/300x200?text=No+Image" : item.MainImageUrl)" class="card-img-top property-image" alt="Elan şəkli">
+                        <div class="card-body p-3">
+                            <p class="card-text mb-2 fw-semibold">@item.Title</p>
+                            <div class="mb-2">
+                                <span class="price-tag">@item.Price AZN</span>
+                            </div>
+                            <p class="card-text text-muted mb-1 small">@item.CityName @item.DistrictName</p>
+                            <p class="card-text mb-2 small">@(item.RoomCount) otaqlı • @(item.Area) m²</p>
+                            <p class="card-text text-muted small mb-0">@item.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         }
     }

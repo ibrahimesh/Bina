@@ -1,0 +1,57 @@
+﻿@using Microsoft.Extensions.Localization
+@using Bina.Client.Resources
+@inject IStringLocalizer<SharedResource> T
+@model PropertyResponseDto
+@{
+    ViewData["Title"] = T["AdDetails"];
+    var firstImage = Model.ImageUrls?.FirstOrDefault();
+    var imageUrl = string.IsNullOrWhiteSpace(firstImage)
+        ? (string.IsNullOrWhiteSpace(Model.MainImageUrl) ? "https://via.placeholder.com/900x450?text=No+Image" : Model.MainImageUrl)
+        : firstImage;
+}
+
+<div class="container mt-4">
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="modern-card details-hero">
+                <img src="@imageUrl" class="card-img-top" style="height:420px; object-fit:cover;" alt="Elan şəkli" />
+                <div class="card-body p-4">
+                    <h3 class="mb-2 fw-bold">@Model.Title</h3>
+                    <p class="text-muted mb-3">@Model.CityName @Model.DistrictName</p>
+                    <div class="mb-3">
+                        <span class="price-tag" style="font-size:1rem;">@Model.Price AZN</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <span class="info-chip"><strong>@T["RoomCount"]:</strong> @Model.RoomCount</span>
+                        <span class="info-chip"><strong>@T["Area"]:</strong> @Model.Area m²</span>
+                        <span class="info-chip"><strong>@T["Floor"]:</strong> @Model.Floor / @Model.TotalFloors</span>
+                        @if (!string.IsNullOrWhiteSpace(Model.CategoryName))
+                        {
+                            <span class="info-chip"><strong>@T["Category"]:</strong> @Model.CategoryName</span>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.MetroName))
+                        {
+                            <span class="info-chip"><strong>@T["Metro"]:</strong> @Model.MetroName</span>
+                        }
+                    </div>
+
+                    <hr />
+                    <p class="mb-0 lh-lg">@Model.Description</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="modern-card">
+                <div class="card-body p-4">
+                    <h5 class="mb-3 fw-bold">@T["AdditionalInfo"]</h5>
+                    <p class="mb-2">@((Model.IsUrgent ? T["UrgentAd"].Value : T["RegularAd"].Value))</p>
+                    <p class="mb-2">@(Model.HasRepair ? T["Repaired"].Value : T["NotRepaired"].Value)</p>
+                    <p class="mb-2">@(Model.HasMortgage ? T["MortgageAvailable"].Value : T["NoMortgage"].Value)</p>
+                    <p class="mb-0 text-muted">@T["PostedAt"]: @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

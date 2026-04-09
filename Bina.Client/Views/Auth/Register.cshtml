@@ -1,4 +1,4 @@
-@model RegisterDto
+﻿@model RegisterDto
 @{
     ViewData["Title"] = "Qeydiyyat";
 }
@@ -18,28 +18,30 @@
                 }
                 <form asp-controller="Auth" asp-action="Register" method="post">
                     <div class="mb-3">
-                        <label class="form-label text-muted fw-bold">Ad v? Soyad</label>
-                        <input type="text" class="form-control" name="FullName" asp-for="FullName" required />
+                        <label class="form-label text-muted fw-bold">Ad və Soyad</label>
+                        <input type="text" class="form-control" name="FullName" asp-for="FullName" minlength="2" maxlength="100" required />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted fw-bold">E-po?t</label>
+                        <label class="form-label text-muted fw-bold">E-poçt</label>
                         <input type="email" class="form-control" name="Email" asp-for="Email" required />
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted fw-bold">Mobil n?mr?</label>
-                        <input type="text" class="form-control" name="PhoneNumber" asp-for="PhoneNumber" placeholder="+994" required />
+                        <label class="form-label text-muted fw-bold">Mobil nömrə</label>
+                        <input type="text" class="form-control" name="PhoneNumber" asp-for="PhoneNumber" placeholder="+994501234567" pattern="^\+994[0-9]{9}$" required />
+                        <small class="text-muted">Format: +994501234567</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted fw-bold">?ifr?</label>
-                        <input type="password" class="form-control" name="Password" asp-for="Password" required />
+                        <label class="form-label text-muted fw-bold">Şifrə</label>
+                        <input type="password" class="form-control" name="Password" asp-for="Password" minlength="8" required />
+                        <small class="text-muted">Ən azı 8 simvol, 1 böyük hərf, 1 kiçik hərf, 1 rəqəm, 1 xüsusi simvol.</small>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label text-muted fw-bold">?ifr?nin t?krar?</label>
+                        <label class="form-label text-muted fw-bold">Şifrənin təkrarı</label>
                         <input type="password" class="form-control" name="ConfirmPassword" asp-for="ConfirmPassword" required />
                     </div>
                     <button type="submit" class="btn btn-success w-100 fw-bold py-2">Hesab Yarat</button>
                     <div class="text-center mt-3">
-                        T?z?d?n <a asp-controller="Auth" asp-action="Login" class="text-danger fw-bold text-decoration-none">daxil ol</a>
+                        Təzədən <a asp-controller="Auth" asp-action="Login" class="text-danger fw-bold text-decoration-none">daxil ol</a>
                     </div>
                 </form>
             </div>

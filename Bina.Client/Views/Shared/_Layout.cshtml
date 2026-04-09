@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using System.Globalization
+@using Microsoft.Extensions.Localization
+@using Bina.Client.Resources
+@inject IStringLocalizer<SharedResource> T
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.Name">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Bina.Client</title>
+    <title>@ViewData["Title"] - @T["AppName"]</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -11,9 +16,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-danger border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold text-white fs-4" asp-area="" asp-controller="Home" asp-action="Index">BINA.AZ</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark app-navbar mb-4">
+            <div class="container-fluid px-md-4">
+                <a class="navbar-brand fw-bold text-white fs-4" asp-area="" asp-controller="Home" asp-action="Index">@T["AppName"]</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,36 +26,46 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Ana Səhifə</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">@T["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Search" asp-action="Index">Axtarış</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Search" asp-action="Index">@T["Search"]</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav align-items-center gap-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Login">Giriş</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Login">@T["Login"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Register">Qeydiyyat</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Register">@T["Register"]</a>
                         </li>
-                        <li class="nav-item ms-3">
-                            <a class="btn btn-success fw-bold p-2" asp-area="" asp-controller="Elan" asp-action="Create">+ Elan Yerləşdir</a>
+                        <li class="nav-item ms-2">
+                            <a class="btn btn-success fw-bold px-3" asp-area="" asp-controller="Elan" asp-action="Create">@T["PostAd"]</a>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <form method="get" asp-controller="Language" asp-action="SetLanguage" class="d-flex align-items-center">
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                <select name="culture" class="form-select form-select-sm" onchange="this.form.submit()">
+                                    <option value="az-AZ" selected="@(CultureInfo.CurrentUICulture.Name == "az-AZ")">@T["Azerbaijani"]</option>
+                                    <option value="en-US" selected="@(CultureInfo.CurrentUICulture.Name == "en-US")">@T["English"]</option>
+                                    <option value="ru-RU" selected="@(CultureInfo.CurrentUICulture.Name == "ru-RU")">@T["Russian"]</option>
+                                </select>
+                            </form>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Bina.Client - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted mt-4">
+        <div class="container py-3">
+            &copy; 2026 - @T["AppName"] - <a asp-area="" asp-controller="Home" asp-action="Privacy">@T["Privacy"]</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

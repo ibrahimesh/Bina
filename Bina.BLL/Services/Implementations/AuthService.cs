@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bina.BLL.Services.Implementations
 {
@@ -33,8 +34,12 @@ namespace Bina.BLL.Services.Implementations
         {
             try
             {
+                dto.Email = (dto.Email ?? string.Empty).Trim().ToLowerInvariant();
+                dto.PhoneNumber = (dto.PhoneNumber ?? string.Empty).Trim();
+                dto.FullName = (dto.FullName ?? string.Empty).Trim();
+
                 var existingUsers = await _userRepository.GetAllAsync();
-                if (existingUsers.Any(u => u.Email == dto.Email))
+                if (existingUsers.Any(u => string.Equals(u.Email, dto.Email, StringComparison.OrdinalIgnoreCase)))
                     return ApiResponse<AuthResponseDto>.Fail("Bu e-poçt art?q istifad? olunur.");
 
                 var user = new User
@@ -47,7 +52,7 @@ namespace Bina.BLL.Services.Implementations
                     IsActive = true,
                     IsVerified = false,
                     CreatedAt = DateTime.UtcNow,
-                    AvatarUrl = ""
+                    AvatarUrl = string.Empty
                 };
 
                 await _userRepository.AddAsync(user);
@@ -62,6 +67,10 @@ namespace Bina.BLL.Services.Implementations
                     User = _mapper.Map<UserProfileDto>(user)
                 });
             }
+            catch (DbUpdateException)
+            {
+                return ApiResponse<AuthResponseDto>.Fail("Bu e-poçt art?q istifad? olunur.");
+            }
             catch (Exception ex)
             {
                 return ApiResponse<AuthResponseDto>.Fail("Sistem x?tas? ba? verdi.", ex.Message);
@@ -72,8 +81,10 @@ namespace Bina.BLL.Services.Implementations
         {
             try
             {
+                var normalizedEmail = (dto.Email ?? string.Empty).Trim().ToLowerInvariant();
+
                 var users = await _userRepository.GetAllAsync();
-                var user = users.FirstOrDefault(u => u.Email == dto.Email);
+                var user = users.FirstOrDefault(u => string.Equals(u.Email, normalizedEmail, StringComparison.OrdinalIgnoreCase));
 
                 if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
                     return ApiResponse<AuthResponseDto>.Fail("E-poçt v? ya ?ifr? yanl??d?r.");

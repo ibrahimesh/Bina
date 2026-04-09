@@ -8,8 +8,11 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+:root {
+  --brand-primary: #e63946;
+  --brand-dark: #8d1320;
+  --brand-bg: #f7f9fc;
+  --card-radius: 18px;
 }
 
 html {
@@ -19,13 +22,102 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: radial-gradient(circle at top right, #ffe9ec 0%, #f7f9fc 35%, #f7f9fc 100%);
+  color: #1f2937;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.app-navbar {
+  background: linear-gradient(120deg, #d72638 0%, #b81f2f 45%, #8d1320 100%);
+  border: 0 !important;
+  box-shadow: 0 8px 24px rgba(141, 19, 32, 0.25);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.app-navbar .navbar-brand {
+  letter-spacing: 0.5px;
+}
+
+.app-navbar .nav-link {
+  border-radius: 10px;
+  transition: background-color .2s ease, transform .2s ease;
+  padding: .45rem .75rem !important;
+}
+
+.app-navbar .nav-link:hover {
+  background-color: rgba(255,255,255,.14);
+  transform: translateY(-1px);
+}
+
+.modern-card {
+  border: 0;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(17, 24, 39, 0.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(17, 24, 39, 0.14);
+}
+
+.property-image {
+  height: 210px;
+  object-fit: cover;
+}
+
+.price-tag {
+  display: inline-block;
+  background: #ffecef;
+  color: var(--brand-primary);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+.search-panel {
+  border-radius: var(--card-radius);
+  border: 1px solid #eef1f5;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.form-control, .form-select {
+  border-radius: 12px;
+  border: 1px solid #dbe3ee;
+}
+
+.form-control:focus, .form-select:focus, .btn:focus, .btn:active:focus {
+  box-shadow: 0 0 0 .2rem rgba(230, 57, 70, .18);
+  border-color: #f099a1;
+}
+
+.btn-brand {
+  background: linear-gradient(120deg, #e63946, #c71f31);
+  border: none;
+  color: #fff;
+}
+
+.btn-brand:hover {
+  color: #fff;
+  filter: brightness(.95);
+}
+
+.details-hero {
+  border-radius: var(--card-radius);
+  overflow: hidden;
+}
+
+.info-chip {
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: .35rem .8rem;
+  font-size: .85rem;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0 .35rem .45rem 0;
+}
+
+.footer {
+  background: #fff;
 }
